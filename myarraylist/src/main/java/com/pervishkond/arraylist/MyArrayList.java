@@ -1,5 +1,6 @@
 package com.pervishkond.arraylist;
 
+import java.util.Arrays;
 import java.util.Comparator;
 
 public class MyArrayList<E> {
@@ -38,9 +39,11 @@ public class MyArrayList<E> {
     }
 
     public void addAll(MyArrayList<? extends E> otherArrayList) {
-        for (int i = 0; i < otherArrayList.getSize(); i++) {
-            this.add(otherArrayList.get(i));
-        }
+        Object[] newArray = new Object[getSize() + otherArrayList.getSize()];
+        System.arraycopy(array, 0, newArray, 0, array.length - 1);
+        System.arraycopy(otherArrayList.array, 0, newArray, array.length - 1, otherArrayList.getSize());
+        array = newArray.clone();
+        size += otherArrayList.getSize();
     }
 
 
@@ -48,12 +51,7 @@ public class MyArrayList<E> {
         size--;
         array[index] = 0;
         int remove = index;
-        while (remove < getSize()) {  // использую метод пузырька для сохранения порядка
-            Object removed = array[remove];
-            array[remove] = array[remove + 1];
-            array[remove + 1] = removed;
-            remove++;
-        }
+        replaceNull(remove);
         array[array.length - 1] = null;// возможно было бы проще написать метод System.arraycopy
     }
 
@@ -63,12 +61,7 @@ public class MyArrayList<E> {
             if (e.equals(array[i])) {
                 array[i] = 0;
                 int remove = i;
-                while (remove < getSize()) {
-                    Object removed = array[remove];
-                    array[remove] = array[remove + 1];
-                    array[remove + 1] = removed;
-                    remove++;
-                }
+                replaceNull(remove);
             }
         }
     }
@@ -78,6 +71,9 @@ public class MyArrayList<E> {
     }
 
     public E get(int index) {
+        if (index > getSize()) {
+            return null;
+        }
         return (E) array[index];
     }
 
@@ -88,16 +84,27 @@ public class MyArrayList<E> {
     }
 
     public boolean isEmpty() {
-        if (getSize() == 0) {
-            return true;
-        }
-        return false;
+        return getSize() == 0;
     }
 
     public void sort(Comparator<? super E> c) {
+        trim();
         MergeSorter.sort((E[]) array, c);
     }
 
+    private void replaceNull(int remove) {
+        while (remove < getSize()) {
+            Object removed = array[remove];
+            array[remove] = array[remove + 1];
+            array[remove + 1] = removed;
+            remove++;
 
+        }
+    }
+    private void trim(){
+        newArray = new Object[getSize()];
+        System.arraycopy(array, 0, newArray, 0, newArray.length-1);
+        array = newArray.clone();
+    }
 }
 
