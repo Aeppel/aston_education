@@ -1,4 +1,4 @@
-package org.pervishkond.hibernateshawarmamenu;
+package com.pervishkond.hibernateshawarmamenu;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
