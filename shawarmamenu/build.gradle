@@ -1,0 +1,60 @@
+plugins {
+    id 'java'
+    id "com.bmuschko.tomcat" version "2.7.0"
+}
+
+group 'org.pervishkond'
+version '1.0'
+apply plugin: "com.bmuschko.tomcat"
+
+
+
+repositories {
+    mavenCentral()
+
+}
+
+dependencies {
+    runtimeOnly 'org.postgresql:postgresql'
+    implementation 'org.postgresql:postgresql:42.2.24'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
+    providedCompile 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.3'
+    def tomcatVersion = '9.0.1'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
+            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+}
+
+
+test {
+    useJUnitPlatform()
+}
+
+tomcat {
+    //httpPort = 8080 // Порт, на котором Tomcat будет слушать запросы
+ //   contextPath = '/shawarmamenu' // Путь к файлу .war вашего веб-приложения
+    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
+    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
+    httpPort = 8091
+//    httpsPort = 8091
+//   enableSSL = true
+
+
+    users {
+        user {
+            username = 'user1'
+            password = '123456'
+            roles = ['developers', 'admin']
+        }
+
+        user {
+            username = 'user2'
+            password = 'abcdef'
+            roles = ['manager']
+        }
+    }
+}
+
+

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="2.5"
+         metadata-complete="true">
+    <servlet>
+        <servlet-name>OneToMany</servlet-name>
+        <servlet-class>com.pervishkond.shawarmamenu.OneToMany</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OneToMany</servlet-name>
+        <url-pattern>/shawarma_menu</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ManyToMany</servlet-name>
+        <servlet-class>com.pervishkond.shawarmamenu.ManyToMany</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ManyToMany</servlet-name>
+        <url-pattern>/conduction_of_the_product</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Ordering</servlet-name>
+        <servlet-class>com.pervishkond.shawarmamenu.Ordering</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Ordering</servlet-name>
+        <url-pattern>/profits</url-pattern>
+    </servlet-mapping>
+
+</web-app>
